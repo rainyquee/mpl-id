@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPL Indonesia Season 17 — Regular Season 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E3000F;
+    --red-dark: #B0000B;
+    --red-light: #FF1A27;
+    --white: #FFFFFF;
+    --off-white: #F8F8F8;
+    --light-gray: #F0F0F0;
+    --mid-gray: #D0D0D0;
+    --text-dark: #1A1A1A;
+    --text-muted: #666;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--red);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 24px rgba(227,0,15,0.25);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .mpl-badge {
+    background: white;
+    color: var(--red);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    letter-spacing: 1px;
+  }
+
+  .logo-text h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .logo-text p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .meta-label { opacity: 0.6; font-size: 11px; text-transform: uppercase; }
+  .meta-val { font-weight: 600; font-size: 14px; }
+
+  /* HERO STRIPE */
+  .hero-stripe {
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 50%, var(--red-light) 100%);
+    padding: 32px 32px 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-stripe::before {
+    content: 'S17';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .season-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+
+  .season-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: white;
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .season-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
+  /* WEEK TABS */
+  .week-tabs-wrapper {
+    display: flex;
+    gap: 2px;
+    padding-top: 4px;
+  }
+
+  .week-tab {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .week-tab:hover { background: rgba(255,255,255,0.2); color: white; }
+
+  .week-tab.active {
+    background: white;
+    color: var(--red);
+    border-radius: 6px 6px 0 0;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+  }
+
+  /* CONTROLS BAR */
+  .controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 16px;
+    border-bottom: 2px solid var(--light-gray);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .week-info {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .week-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .week-dates {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .team-filter-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .team-btn {
+    background: var(--light-gray);
+    border: 2px solid transparent;
+    color: var(--text-dark);
+    padding: 6px 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.18s;
+  }
+
+  .team-btn:hover { background: var(--mid-gray); }
+
+  .team-btn.active {
+    background: var(--red);
+    color: white;
+    border-color: var(--red-dark);
+  }
+
+  .clear-btn {
+    background: none;
+    border: 2px solid var(--mid-gray);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.18s;
+  }
+
+  .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+  /* SCHEDULE GRID */
+  .schedule-section {
+    margin-top: 24px;
+  }
+
+  .day-block {
+    margin-bottom: 28px;
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .day-badge {
+    background: var(--red);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 3px;
+  }
+
+  .day-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--text-dark);
+    letter-spacing: 1px;
+  }
+
+  .day-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  .matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* MATCH CARD */
+  .match-card {
+    background: var(--white);
+    border: 1.5px solid var(--light-gray);
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .match-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+  }
+
+  .match-card:hover {
+    border-color: var(--red);
+    box-shadow: 0 4px 20px rgba(227,0,15,0.1);
+    transform: translateY(-2px);
+  }
+
+  .match-card:hover::before { transform: scaleX(1); }
+
+  .match-card.dimmed {
+    opacity: 0.25;
+    transform: none;
+  }
+
+  .match-card.dimmed:hover {
+    opacity: 0.35;
+    box-shadow: none;
+    border-color: var(--light-gray);
+    transform: none;
+  }
+
+  .match-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .match-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .match-time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .match-time-dot {
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .match-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .team-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .team-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .team-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    text-align: center;
+  }
+
+  .vs-divider {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--mid-gray);
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+
+  /* TEAM COLORS */
+  .logo-AE    { background: #2D2D2D; }
+  .logo-BTR   { background: #C41230; }
+  .logo-DEWA  { background: #0D3B8C; }
+  .logo-EVOS  { background: #1A6B3A; }
+  .logo-GEEK  { background: #E87D00; }
+  .logo-NAVI  { background: #F7C31B; color: #1A1A1A !important; }
+  .logo-ONIC  { background: #F0A500; color: #1A1A1A !important; }
+  .logo-RRQ   { background: #C8892A; }
+  .logo-TLID  { background: #1B3A9E; }
+
+  /* TEAM HIGHLIGHT */
+  .match-card.highlight-left .team-side:first-child .team-name,
+  .match-card.highlight-right .team-side:last-child .team-name {
+    color: var(--red);
+  }
+
+  /* STORY PANEL */
+  .story-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 2px solid var(--light-gray);
+  }
+
+  .story-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .story-tag {
+    background: var(--red);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 3px;
+  }
+
+  .story-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+  }
+
+  .story-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .story-card {
+    background: var(--off-white);
+    border-left: 4px solid var(--red);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 18px;
+  }
+
+  .story-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .story-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* STANDINGS TEASER */
+  .standings-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 2px solid var(--light-gray);
+  }
+
+  .standings-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .standings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .team-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--off-white);
+    border: 1.5px solid var(--light-gray);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .team-pill:hover {
+    border-color: var(--red);
+    background: white;
+  }
+
+  .team-pill .team-logo { width: 32px; height: 32px; font-size: 10px; }
+
+  .team-pill-info { flex: 1; }
+  .team-pill-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dark);
+  }
+
+  .team-pill-full {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--text-dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 24px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  footer strong { color: var(--red); }
+
+  .no-matches {
+    text-align: center;
+    padding: 48px 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .header-top { padding: 12px 16px; }
+    .hero-stripe { padding: 20px 16px 0; }
+    .season-title { font-size: 42px; }
+    .main { padding: 0 16px 32px; }
+    .controls-bar { flex-direction: column; align-items: flex-start; }
+    .week-tab { padding: 8px 14px; font-size: 13px; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="mpl-badge">MPL</div>
+      <div class="logo-text">
+        <h1>MPL INDONESIA</h1>
+        <p>Season 17 — Regular Season 2026</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Format</span>
+        <span class="meta-val">BO3 · Double RR</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tim</span>
+        <span class="meta-val">9 Franchise</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Arena</span>
+        <span class="meta-val">XO Hall, Jakarta</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stripe">
+    <div class="hero-content">
+      <div class="season-label">Jadwal Regular Season</div>
+      <div class="season-title">Regular Season</div>
+      <div class="season-subtitle">27 Maret – 24 Mei 2026 · 9 Pekan · 27 Pertandingan</div>
+      <div class="week-tabs-wrapper" id="weekTabs"></div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+  <div class="controls-bar">
+    <div class="week-info">
+      <span class="week-number" id="currentWeekNum">PEKAN 1</span>
+      <span class="week-dates" id="currentWeekDates"></span>
+    </div>
+    <div class="team-filter-area">
+      <span class="filter-label">Filter Tim:</span>
+      <div id="teamFilters"></div>
+      <button class="clear-btn" onclick="clearTeamFilter()">Semua Tim</button>
+    </div>
+  </div>
+
+  <div class="schedule-section" id="scheduleContent"></div>
+
+  <div class="story-section">
+    <div class="story-header">
+      <span class="story-tag">Sorotan Musim</span>
+      <span class="story-title">Cerita Terpanas S17</span>
+    </div>
+    <div class="story-cards">
+      <div class="story-card">
+        <h3>🏆 Dominasi ONIC</h3>
+        <p>ONIC Esports tampil luar biasa sejak awal musim, mengunci gelar Juara Paruh Musim dan menjadi tim pertama memastikan tiket Playoff setelah menumbangkan RRQ di Week 6.</p>
+      </div>
+      <div class="story-card">
+        <h3>📉 Masa Kelam RRQ</h3>
+        <p>Musim terberat RRQ Hoshi. Terjebak di dasar klasemen, baru pecah rekor losing streak di Week 6. Peluang lolos ke Playoff sangat tipis, di bawah 1%.</p>
+      </div>
+      <div class="story-card">
+        <h3>🔄 Transfer Mengejutkan</h3>
+        <p>Super Kenn pindah dari Bigetron ke RRQ Hoshi. RRQ juga mendatangkan EXP Laner asal Filipina, Dan, dari RRQ Kaito sebelum Roster Lock 19 Februari 2026.</p>
+      </div>
+      <div class="story-card">
+        <h3>🎭 Meta Nana</h3>
+        <p>Hero Nana mengalami lonjakan pamor luar biasa. Dari sering diremehkan, kini menjadi senjata crowd control mematikan dan penghancur mental lawan di panggung profesional.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="standings-section">
+    <div class="standings-header">
+      <span class="story-tag">Tim Peserta</span>
+      <span class="story-title">9 Franchise MPL ID S17</span>
+    </div>
+    <div class="standings-grid" id="teamPills"></div>
+  </div>
+</div>
+
+<footer>
+  <p>MPL Indonesia Season 17 &middot; Reguler Season 2026 &middot; <strong>id-mpl.com</strong> &middot; Data dari jadwal resmi MPL ID</p>
+</footer>
+
+<script>
+const TEAMS = {
+  AE:   { name: 'Alter Ego',           short: 'AE',   logo: 'AE' },
+  BTR:  { name: 'Bigetron by Vitality', short: 'BTR',  logo: 'BTR' },
+  DEWA: { name: 'Dewa United',          short: 'DEWA', logo: 'DWU' },
+  EVOS: { name: 'EVOS',                 short: 'EVOS', logo: 'EVOS' },
+  GEEK: { name: 'Geek Fam',             short: 'GEEK', logo: 'GFK' },
+  NAVI: { name: 'Natus Vincere',         short: 'NAVI', logo: 'NAVI' },
+  ONIC: { name: 'ONIC Esports',         short: 'ONIC', logo: 'ONIC' },
+  RRQ:  { name: 'RRQ Hoshi',            short: 'RRQ',  logo: 'RRQ' },
+  TLID: { name: 'Team Liquid ID',       short: 'TLID', logo: 'TL' },
+};
+
+const WEEKS = [
+  {
+    num: 1, label: 'W1',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '27 Maret 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'BTR', away: 'AE' },
+          { num: 2, time: '18:00 WIB', home: 'NAVI', away: 'RRQ' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '28 Maret 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'EVOS', away: 'GEEK' },
+          { num: 2, time: '17:00 WIB', home: 'AE', away: 'ONIC' },
+          { num: 3, time: '20:00 WIB', home: 'TLID', away: 'NAVI' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '29 Maret 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'DEWA', away: 'BTR' },
+          { num: 2, time: '17:00 WIB', home: 'EVOS', away: 'TLID' },
+          { num: 3, time: '20:00 WIB', home: 'RRQ', away: 'ONIC' },
+        ]},
+    ]
+  },
+  {
+    num: 2, label: 'W2',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '3 April 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'ONIC', away: 'GEEK' },
+          { num: 2, time: '18:00 WIB', home: 'DEWA', away: 'NAVI' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '4 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'GEEK', away: 'BTR' },
+          { num: 2, time: '17:00 WIB', home: 'AE', away: 'EVOS' },
+          { num: 3, time: '20:00 WIB', home: 'TLID', away: 'DEWA' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '5 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'NAVI', away: 'AE' },
+          { num: 2, time: '17:00 WIB', home: 'RRQ', away: 'TLID' },
+          { num: 3, time: '20:00 WIB', home: 'BTR', away: 'EVOS' },
+        ]},
+    ]
+  },
+  {
+    num: 3, label: 'W3',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '10 April 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'ONIC', away: 'DEWA' },
+          { num: 2, time: '18:00 WIB', home: 'NAVI', away: 'EVOS' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '11 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'TLID', away: 'GEEK' },
+          { num: 2, time: '17:00 WIB', home: 'ONIC', away: 'BTR' },
+          { num: 3, time: '20:00 WIB', home: 'RRQ', away: 'AE' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '12 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'BTR', away: 'NAVI' },
+          { num: 2, time: '17:00 WIB', home: 'GEEK', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'AE', away: 'DEWA' },
+        ]},
+    ]
+  },
+  {
+    num: 4, label: 'W4',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '17 April 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'NAVI', away: 'ONIC' },
+          { num: 2, time: '18:00 WIB', home: 'EVOS', away: 'DEWA' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '18 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'TLID', away: 'BTR' },
+          { num: 2, time: '17:00 WIB', home: 'RRQ', away: 'EVOS' },
+          { num: 3, time: '20:00 WIB', home: 'GEEK', away: 'AE' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '19 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'ONIC', away: 'TLID' },
+          { num: 2, time: '17:00 WIB', home: 'BTR', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'DEWA', away: 'GEEK' },
+        ]},
+    ]
+  },
+  {
+    num: 5, label: 'W5',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '24 April 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'GEEK', away: 'NAVI' },
+          { num: 2, time: '18:00 WIB', home: 'EVOS', away: 'ONIC' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '25 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'DEWA', away: 'RRQ' },
+          { num: 2, time: '17:00 WIB', home: 'AE', away: 'TLID' },
+          { num: 3, time: '20:00 WIB', home: 'EVOS', away: 'BTR' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '26 April 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'AE', away: 'NAVI' },
+          { num: 2, time: '17:00 WIB', home: 'GEEK', away: 'ONIC' },
+          { num: 3, time: '20:00 WIB', home: 'DEWA', away: 'TLID' },
+        ]},
+    ]
+  },
+  {
+    num: 6, label: 'W6',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '1 Mei 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'NAVI', away: 'DEWA' },
+          { num: 2, time: '18:00 WIB', home: 'AE', away: 'GEEK' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '2 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'EVOS', away: 'AE' },
+          { num: 2, time: '17:00 WIB', home: 'TLID', away: 'ONIC' },
+          { num: 3, time: '20:00 WIB', home: 'RRQ', away: 'BTR' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '3 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'NAVI', away: 'TLID' },
+          { num: 2, time: '17:00 WIB', home: 'ONIC', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'GEEK', away: 'EVOS' },
+        ]},
+    ]
+  },
+  {
+    num: 7, label: 'W7',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '8 Mei 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'GEEK', away: 'DEWA' },
+          { num: 2, time: '18:00 WIB', home: 'BTR', away: 'TLID' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '9 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'DEWA', away: 'AE' },
+          { num: 2, time: '17:00 WIB', home: 'EVOS', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'ONIC', away: 'NAVI' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '10 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'RRQ', away: 'GEEK' },
+          { num: 2, time: '17:00 WIB', home: 'NAVI', away: 'BTR' },
+          { num: 3, time: '20:00 WIB', home: 'TLID', away: 'EVOS' },
+        ]},
+    ]
+  },
+  {
+    num: 8, label: 'W8',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '15 Mei 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'BTR', away: 'GEEK' },
+          { num: 2, time: '18:00 WIB', home: 'DEWA', away: 'ONIC' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '16 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'EVOS', away: 'NAVI' },
+          { num: 2, time: '17:00 WIB', home: 'TLID', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'ONIC', away: 'AE' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '17 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'DEWA', away: 'EVOS' },
+          { num: 2, time: '17:00 WIB', home: 'AE', away: 'BTR' },
+          { num: 3, time: '20:00 WIB', home: 'RRQ', away: 'NAVI' },
+        ]},
+    ]
+  },
+  {
+    num: 9, label: 'W9',
+    days: [
+      { day: 'Hari 1', name: 'Jumat', date: '22 Mei 2026',
+        matches: [
+          { num: 1, time: '15:00 WIB', home: 'BTR', away: 'DEWA' },
+          { num: 2, time: '18:00 WIB', home: 'TLID', away: 'AE' },
+        ]},
+      { day: 'Hari 2', name: 'Sabtu', date: '23 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'GEEK', away: 'TLID' },
+          { num: 2, time: '17:00 WIB', home: 'AE', away: 'RRQ' },
+          { num: 3, time: '20:00 WIB', home: 'BTR', away: 'ONIC' },
+        ]},
+      { day: 'Hari 3', name: 'Minggu', date: '24 Mei 2026',
+        matches: [
+          { num: 1, time: '14:00 WIB', home: 'RRQ', away: 'DEWA' },
+          { num: 2, time: '17:00 WIB', home: 'ONIC', away: 'EVOS' },
+          { num: 3, time: '20:00 WIB', home: 'NAVI', away: 'GEEK' },
+        ]},
+    ]
+  },
+];
+
+let currentWeek = 1;
+let activeTeam = null;
+
+function getWeekDates(week) {
+  const d1 = week.days[0].date;
+  const d3 = week.days[2].date;
+  return `${d1} – ${d3}`;
+}
+
+function buildWeekTabs() {
+  const el = document.getElementById('weekTabs');
+  WEEKS.forEach(w => {
+    const btn = document.createElement('button');
+    btn.className = 'week-tab' + (w.num === currentWeek ? ' active' : '');
+    btn.textContent = `PEKAN ${w.num}`;
+    btn.onclick = () => selectWeek(w.num);
+    el.appendChild(btn);
+  });
+}
+
+function buildTeamFilters() {
+  const el = document.getElementById('teamFilters');
+  el.style.display = 'flex';
+  el.style.gap = '6px';
+  el.style.flexWrap = 'wrap';
+  Object.keys(TEAMS).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'team-btn' + (activeTeam === key ? ' active' : '');
+    btn.id = 'filter-' + key;
+    btn.textContent = TEAMS[key].short;
+    btn.onclick = () => selectTeam(key);
+    el.appendChild(btn);
+  });
+}
+
+function buildTeamPills() {
+  const el = document.getElementById('teamPills');
+  Object.keys(TEAMS).forEach(key => {
+    const t = TEAMS[key];
+    const div = document.createElement('div');
+    div.className = 'team-pill';
+    div.onclick = () => selectTeam(key);
+    div.innerHTML = `
+      <div class="team-logo logo-${key}">${t.logo}</div>
+      <div class="team-pill-info">
+        <div class="team-pill-name">${t.short}</div>
+        <div class="team-pill-full">${t.name}</div>
+      </div>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function selectWeek(num) {
+  currentWeek = num;
+  document.querySelectorAll('.week-tab').forEach((el, i) => {
+    el.classList.toggle('active', WEEKS[i].num === num);
+  });
+  const week = WEEKS[num - 1];
+  document.getElementById('currentWeekNum').textContent = `PEKAN ${num}`;
+  document.getElementById('currentWeekDates').textContent = getWeekDates(week);
+  renderSchedule();
+}
+
+function selectTeam(key) {
+  if (activeTeam === key) {
+    activeTeam = null;
+  } else {
+    activeTeam = key;
+  }
+  document.querySelectorAll('.team-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  if (activeTeam) {
+    const el = document.getElementById('filter-' + activeTeam);
+    if (el) el.classList.add('active');
+  }
+  renderSchedule();
+}
+
+function clearTeamFilter() {
+  activeTeam = null;
+  document.querySelectorAll('.team-btn').forEach(btn => btn.classList.remove('active'));
+  renderSchedule();
+}
+
+function renderSchedule() {
+  const week = WEEKS[currentWeek - 1];
+  const container = document.getElementById('scheduleContent');
+  container.innerHTML = '';
+
+  let totalVisible = 0;
+
+  week.days.forEach(dayData => {
+    const filtered = activeTeam
+      ? dayData.matches.filter(m => m.home === activeTeam || m.away === activeTeam)
+      : dayData.matches;
+
+    if (activeTeam && filtered.length === 0) return;
+
+    totalVisible += filtered.length;
+
+    const dayBlock = document.createElement('div');
+    dayBlock.className = 'day-block';
+
+    dayBlock.innerHTML = `
+      <div class="day-header">
+        <span class="day-badge">${dayData.day}</span>
+        <span class="day-name">${dayData.name.toUpperCase()}</span>
+        <span class="day-date">${dayData.date}</span>
+      </div>
+    `;
+
+    const grid = document.createElement('div');
+    grid.className = 'matches-grid';
+
+    const matches = activeTeam ? dayData.matches : dayData.matches;
+    matches.forEach(match => {
+      const isHighlighted = activeTeam && (match.home === activeTeam || match.away === activeTeam);
+      const isDimmed = activeTeam && !isHighlighted;
+      const highlightClass = activeTeam && match.home === activeTeam ? 'highlight-left'
+                           : activeTeam && match.away === activeTeam ? 'highlight-right' : '';
+
+      const card = document.createElement('div');
+      card.className = `match-card ${isDimmed ? 'dimmed' : ''} ${highlightClass}`;
+      card.innerHTML = `
+        <div class="match-meta">
+          <span class="match-num">Match ${match.num}</span>
+          <span class="match-time"><span class="match-time-dot"></span>${match.time}</span>
+        </div>
+        <div class="match-teams">
+          <div class="team-side">
+            <div class="team-logo logo-${match.home}">${TEAMS[match.home].logo}</div>
+            <div class="team-name">${match.home}</div>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="team-side">
+            <div class="team-logo logo-${match.away}">${TEAMS[match.away].logo}</div>
+            <div class="team-name">${match.away}</div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    dayBlock.appendChild(grid);
+    container.appendChild(dayBlock);
+  });
+
+  if (activeTeam && totalVisible === 0) {
+    container.innerHTML = `<div class="no-matches">Tidak ada pertandingan ${TEAMS[activeTeam].name} di pekan ini.</div>`;
+  }
+}
+
+buildWeekTabs();
+buildTeamFilters();
+buildTeamPills();
+selectWeek(1);
+</script>
+</body>
+</html>
