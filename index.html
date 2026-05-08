@@ -151,13 +151,18 @@
   }
 
   /* WEEK TABS */
-  .week-tabs-wrapper {
+    .week-tabs-wrapper {
     display: flex;
     gap: 2px;
     padding-top: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+  .week-tabs-wrapper::-webkit-scrollbar { display: none; }
 
-  .week-tab {
+
+    .week-tab {
     background: rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.7);
     border: none;
@@ -170,6 +175,7 @@
     border-radius: 6px 6px 0 0;
     transition: all 0.2s;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .week-tab:hover { background: rgba(255,255,255,0.2); color: white; }
