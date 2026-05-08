@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPL ID Regular Season Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e8001c;
+    --red-dark: #9b0010;
+    --gold: #f5b800;
+    --white: #f0f0f0;
+    --bg: #0a0a0c;
+    --bg2: #111115;
+    --bg3: #18181e;
+    --bg4: #1f1f27;
+    --border: rgba(255,255,255,0.07);
+    --text-dim: rgba(240,240,240,0.45);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 60px 24px 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(232,0,28,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: 4px 14px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(42px, 9vw, 90px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    animation: slideUp 0.6s ease 0.1s both;
+  }
+
+  .hero h1 span { color: var(--red); }
+
+  .hero-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-top: 14px;
+    animation: fadeIn 0.6s ease 0.3s both;
+  }
+
+  /* TEAMS LEGEND */
+  .teams-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px 32px;
+    animation: fadeIn 0.6s ease 0.4s both;
+  }
+
+  .team-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px 5px 8px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+  }
+
+  .team-chip::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--team-color, var(--red));
+    flex-shrink: 0;
+  }
+
+  .team-chip:hover, .team-chip.active {
+    border-color: var(--team-color, var(--red));
+    color: var(--team-color, var(--red));
+    background: var(--bg4);
+    transform: translateY(-1px);
+  }
+
+  .team-chip.active {
+    box-shadow: 0 0 12px rgba(232,0,28,0.3);
+  }
+
+  .team-chip.dimmed { opacity: 0.3; }
+
+  /* CONTROLS */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,12,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+
+  .week-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .week-tabs::-webkit-scrollbar { display: none; }
+
+  .week-tab {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .week-tab:hover { color: var(--white); }
+
+  .week-tab.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+
+  .week-tab .week-dates {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    text-transform: none;
+  }
+
+  .week-tab.active .week-dates { color: rgba(232,0,28,0.6); }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 32px 24px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .week-panel { display: none; animation: fadeInUp 0.4s ease; }
+  .week-panel.active { display: block; }
+
+  .day-section {
+    margin-bottom: 32px;
+  }
+
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .day-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    background: rgba(232,0,28,0.1);
+    border: 1px solid rgba(232,0,28,0.3);
+    padding: 3px 10px;
+  }
+
+  .day-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .day-date span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  .matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  /* MATCH CARD */
+  .match-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    cursor: default;
+  }
+
+  .match-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .match-card:hover {
+    border-color: rgba(232,0,28,0.3);
+    background: var(--bg4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .match-card:hover::before { opacity: 1; }
+
+  .match-card.highlighted {
+    border-color: rgba(245,184,0,0.4);
+    background: rgba(245,184,0,0.04);
+  }
+
+  .match-card.highlighted::before {
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 1;
+  }
+
+  .match-card.dimmed {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .match-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .match-time {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .match-body {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .team-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .team-side.right { flex-direction: column; }
+
+  .team-logo {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .match-card:hover .team-logo {
+    border-color: rgba(232,0,28,0.4);
+  }
+
+  .team-name-card {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .vs-divider {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--red);
+    letter-spacing: 2px;
+    position: relative;
+  }
+
+  .vs-divider::before, .vs-divider::after {
+    content: '';
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    width: 1px;
+    background: var(--border);
+  }
+
+  .vs-divider::before { top: -20px; height: 16px; }
+  .vs-divider::after { bottom: -20px; height: 16px; }
+
+  /* TEAM COLORS */
+  .team-BTR { background: rgba(232,0,28,0.15); color: #ff4455; border-color: rgba(232,0,28,0.3); }
+  .team-AE  { background: rgba(180,120,0,0.15); color: #e8a400; border-color: rgba(180,120,0,0.3); }
+  .team-NAVI { background: rgba(255,200,0,0.12); color: #ffd700; border-color: rgba(255,200,0,0.25); }
+  .team-RRQ  { background: rgba(200,120,0,0.15); color: #f0a030; border-color: rgba(200,120,0,0.3); }
+  .team-EVOS { background: rgba(0,160,230,0.12); color: #00b4e8; border-color: rgba(0,160,230,0.25); }
+  .team-GEEK { background: rgba(220,40,40,0.12); color: #ff6060; border-color: rgba(220,40,40,0.25); }
+  .team-ONIC { background: rgba(255,220,0,0.12); color: #ffdd00; border-color: rgba(255,220,0,0.25); }
+  .team-TLID { background: rgba(0,90,210,0.15); color: #4488ff; border-color: rgba(0,90,210,0.3); }
+  .team-DEWA { background: rgba(20,160,80,0.12); color: #20c060; border-color: rgba(20,160,80,0.25); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+    padding: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    animation: fadeIn 0.4s ease;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  /* WEEK SUMMARY */
+  .week-summary {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(232,0,28,0.08), transparent);
+    border: 1px solid rgba(232,0,28,0.15);
+    animation: slideRight 0.3s ease;
+  }
+
+  .week-title-big {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
+
+  .week-title-big span { color: var(--red); }
+
+  .week-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    letter-spacing: 1px;
+  }
+
+  /* FILTER STATUS */
+  .filter-status {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    background: rgba(245,184,0,0.06);
+    border: 1px solid rgba(245,184,0,0.2);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .filter-status.visible { display: flex; }
+
+  .filter-clear {
+    margin-left: auto;
+    cursor: pointer;
+    color: var(--text-dim);
+    transition: color 0.2s;
+    font-size: 13px;
+  }
+
+  .filter-clear:hover { color: var(--white); }
+
+  /* SCROLL TOP */
+  .scroll-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px; height: 44px;
+    background: var(--red);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+  }
+
+  .scroll-top.visible { opacity: 1; }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* TODAY INDICATOR */
+  .today-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #00ff88;
+    border-radius: 50%;
+    margin-left: 6px;
+    animation: blink 1.5s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* LIVE BADGE */
+  .live-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    padding: 2px 6px;
+    animation: blink 1.5s infinite;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .matches-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 48px; }
+    .week-tab { padding: 12px 12px; font-size: 13px; }
+    .main { padding: 20px 16px 60px; }
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .footer strong { color: var(--red); }
+
+  /* MATCH COUNT BADGE */
+  .match-count-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    padding: 1px 5px;
+    margin-left: 5px;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">MPL ID Season 15 · Regular Season</div>
+  <h1>MPL <span>INDONESIA</span><br>2026</h1>
+  <div class="hero-sub">JADWAL REGULAR SEASON · WEEK 1–9 · SPONSORED BY INFINIX</div>
+</div>
+
+<!-- TEAMS FILTER -->
+<div class="teams-legend" id="teamsLegend">
+  <div class="team-chip" style="--team-color:#ff4455" data-team="BTR" onclick="filterTeam('BTR',this)">BTR</div>
+  <div class="team-chip" style="--team-color:#e8a400" data-team="AE" onclick="filterTeam('AE',this)">ALTER EGO</div>
+  <div class="team-chip" style="--team-color:#ffd700" data-team="NAVI" onclick="filterTeam('NAVI',this)">NAVI</div>
+  <div class="team-chip" style="--team-color:#f0a030" data-team="RRQ" onclick="filterTeam('RRQ',this)">RRQ</div>
+  <div class="team-chip" style="--team-color:#00b4e8" data-team="EVOS" onclick="filterTeam('EVOS',this)">EVOS</div>
+  <div class="team-chip" style="--team-color:#ff6060" data-team="GEEK" onclick="filterTeam('GEEK',this)">GEEK FAM</div>
+  <div class="team-chip" style="--team-color:#ffdd00" data-team="ONIC" onclick="filterTeam('ONIC',this)">ONIC</div>
+  <div class="team-chip" style="--team-color:#4488ff" data-team="TLID" onclick="filterTeam('TLID',this)">TEAM LIQUID</div>
+  <div class="team-chip" style="--team-color:#20c060" data-team="DEWA" onclick="filterTeam('DEWA',this)">DEWA UNITED</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="week-tabs" id="weekTabs"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- OVERALL STATS -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item">
+      <div class="stat-num" id="statWeeks">9</div>
+      <div class="stat-label">TOTAL WEEKS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="statMatches">72</div>
+      <div class="stat-label">TOTAL MATCHES</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">8</div>
+      <div class="stat-label">TEAMS</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">HARI PER WEEK</div>
+    </div>
+  </div>
+
+  <div class="filter-status" id="filterStatus">
+    <span id="filterText">MENAMPILKAN SEMUA MATCH</span>
+    <span class="filter-clear" onclick="clearFilter()">✕ RESET FILTER</span>
+  </div>
+
+  <div id="weekPanels"></div>
+</div>
+
+<div class="footer">
+  MPL ID 2026 · <strong>REGULAR SEASON</strong> · DATA FROM OFFICIAL SCHEDULE · WAKTU DALAM WIB
+</div>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+const TEAMS = {
+  BTR: { name: 'BTR', full: 'ONIC Vitality', color: '#ff4455', abbr: 'BTR' },
+  AE:  { name: 'AE',  full: 'Alter Ego',     color: '#e8a400', abbr: 'AE' },
+  NAVI:{ name: 'NAVI',full: 'Natus Vincere',  color: '#ffd700', abbr: 'NV' },
+  RRQ: { name: 'RRQ', full: 'RRQ Hoshi',      color: '#f0a030', abbr: 'RRQ' },
+  EVOS:{ name: 'EVOS',full: 'EVOS Legends',   color: '#00b4e8', abbr: 'EVS' },
+  GEEK:{ name: 'GEEK',full: 'Geek Fam ID',    color: '#ff6060', abbr: 'GFK' },
+  ONIC:{ name: 'ONIC',full: 'ONIC Esports',   color: '#ffdd00', abbr: 'ONC' },
+  TLID:{ name: 'TLID',full: 'Team Liquid ID', color: '#4488ff', abbr: 'TL' },
+  DEWA:{ name: 'DEWA',full: 'Dewa United',    color: '#20c060', abbr: 'DWU' },
+};
+
+const SCHEDULE = [
+  {
+    week: 1,
+    dates: '27–29 Mar',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 27 Maret 2026', matches: [
+        { num: 1, time: '15:00', t1: 'BTR', t2: 'AE' },
+        { num: 2, time: '18:00', t1: 'NAVI', t2: 'RRQ' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 28 Maret 2026', matches: [
+        { num: 1, time: '14:00', t1: 'EVOS', t2: 'GEEK' },
+        { num: 2, time: '17:00', t1: 'AE', t2: 'ONIC' },
+        { num: 3, time: '20:00', t1: 'TLID', t2: 'NAVI' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 29 Maret 2026', matches: [
+        { num: 1, time: '14:00', t1: 'DEWA', t2: 'BTR' },
+        { num: 2, time: '17:00', t1: 'EVOS', t2: 'TLID' },
+        { num: 3, time: '20:00', t1: 'RRQ', t2: 'ONIC' },
+      ]},
+    ]
+  },
+  {
+    week: 2,
+    dates: '3–5 Apr',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 3 April 2026', matches: [
+        { num: 1, time: '15:00', t1: 'ONIC', t2: 'GEEK' },
+        { num: 2, time: '18:00', t1: 'DEWA', t2: 'NAVI' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 4 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'GEEK', t2: 'BTR' },
+        { num: 2, time: '17:00', t1: 'AE', t2: 'EVOS' },
+        { num: 3, time: '20:00', t1: 'TLID', t2: 'DEWA' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 5 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'NAVI', t2: 'AE' },
+        { num: 2, time: '17:00', t1: 'RRQ', t2: 'TLID' },
+        { num: 3, time: '20:00', t1: 'BTR', t2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 3,
+    dates: '10–12 Apr',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 10 April 2026', matches: [
+        { num: 1, time: '15:00', t1: 'ONIC', t2: 'DEWA' },
+        { num: 2, time: '18:00', t1: 'NAVI', t2: 'EVOS' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 11 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'TLID', t2: 'GEEK' },
+        { num: 2, time: '17:00', t1: 'ONIC', t2: 'BTR' },
+        { num: 3, time: '20:00', t1: 'RRQ', t2: 'AE' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 12 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'BTR', t2: 'NAVI' },
+        { num: 2, time: '17:00', t1: 'GEEK', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'AE', t2: 'DEWA' },
+      ]},
+    ]
+  },
+  {
+    week: 4,
+    dates: '17–19 Apr',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 17 April 2026', matches: [
+        { num: 1, time: '15:00', t1: 'NAVI', t2: 'ONIC' },
+        { num: 2, time: '18:00', t1: 'EVOS', t2: 'DEWA' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 18 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'TLID', t2: 'BTR' },
+        { num: 2, time: '17:00', t1: 'RRQ', t2: 'EVOS' },
+        { num: 3, time: '20:00', t1: 'GEEK', t2: 'AE' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 19 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'ONIC', t2: 'TLID' },
+        { num: 2, time: '17:00', t1: 'BTR', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'DEWA', t2: 'GEEK' },
+      ]},
+    ]
+  },
+  {
+    week: 5,
+    dates: '24–26 Apr',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 24 April 2026', matches: [
+        { num: 1, time: '15:00', t1: 'GEEK', t2: 'NAVI' },
+        { num: 2, time: '18:00', t1: 'EVOS', t2: 'ONIC' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 25 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'DEWA', t2: 'RRQ' },
+        { num: 2, time: '17:00', t1: 'AE', t2: 'TLID' },
+        { num: 3, time: '20:00', t1: 'EVOS', t2: 'BTR' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 26 April 2026', matches: [
+        { num: 1, time: '14:00', t1: 'AE', t2: 'NAVI' },
+        { num: 2, time: '17:00', t1: 'GEEK', t2: 'ONIC' },
+        { num: 3, time: '20:00', t1: 'DEWA', t2: 'TLID' },
+      ]},
+    ]
+  },
+  {
+    week: 6,
+    dates: '1–3 Mei',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 1 Mei 2026', matches: [
+        { num: 1, time: '15:00', t1: 'NAVI', t2: 'DEWA' },
+        { num: 2, time: '18:00', t1: 'AE', t2: 'GEEK' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 2 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'EVOS', t2: 'AE' },
+        { num: 2, time: '17:00', t1: 'TLID', t2: 'ONIC' },
+        { num: 3, time: '20:00', t1: 'RRQ', t2: 'BTR' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 3 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'NAVI', t2: 'TLID' },
+        { num: 2, time: '17:00', t1: 'ONIC', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'GEEK', t2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 7,
+    dates: '8–10 Mei',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 8 Mei 2026', matches: [
+        { num: 1, time: '15:00', t1: 'GEEK', t2: 'DEWA' },
+        { num: 2, time: '18:00', t1: 'BTR', t2: 'TLID' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 9 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'DEWA', t2: 'AE' },
+        { num: 2, time: '17:00', t1: 'EVOS', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'ONIC', t2: 'NAVI' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 10 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'RRQ', t2: 'GEEK' },
+        { num: 2, time: '17:00', t1: 'NAVI', t2: 'BTR' },
+        { num: 3, time: '20:00', t1: 'TLID', t2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 8,
+    dates: '15–17 Mei',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 15 Mei 2026', matches: [
+        { num: 1, time: '15:00', t1: 'BTR', t2: 'GEEK' },
+        { num: 2, time: '18:00', t1: 'DEWA', t2: 'ONIC' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 16 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'EVOS', t2: 'NAVI' },
+        { num: 2, time: '17:00', t1: 'TLID', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'ONIC', t2: 'AE' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 17 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'DEWA', t2: 'EVOS' },
+        { num: 2, time: '17:00', t1: 'AE', t2: 'BTR' },
+        { num: 3, time: '20:00', t1: 'RRQ', t2: 'NAVI' },
+      ]},
+    ]
+  },
+  {
+    week: 9,
+    dates: '22–24 Mei',
+    days: [
+      { label: 'HARI 1', date: 'Jumat, 22 Mei 2026', matches: [
+        { num: 1, time: '15:00', t1: 'BTR', t2: 'DEWA' },
+        { num: 2, time: '18:00', t1: 'TLID', t2: 'AE' },
+      ]},
+      { label: 'HARI 2', date: 'Sabtu, 23 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'GEEK', t2: 'TLID' },
+        { num: 2, time: '17:00', t1: 'AE', t2: 'RRQ' },
+        { num: 3, time: '20:00', t1: 'BTR', t2: 'ONIC' },
+      ]},
+      { label: 'HARI 3', date: 'Minggu, 24 Mei 2026', matches: [
+        { num: 1, time: '14:00', t1: 'RRQ', t2: 'DEWA' },
+        { num: 2, time: '17:00', t1: 'ONIC', t2: 'EVOS' },
+        { num: 3, time: '20:00', t1: 'NAVI', t2: 'GEEK' },
+      ]},
+    ]
+  },
+];
+
+let activeTeam = null;
+let activeWeek = 1;
+
+// Detect current week based on today
+function detectCurrentWeek() {
+  const today = new Date();
+  for (let i = SCHEDULE.length - 1; i >= 0; i--) {
+    const w = SCHEDULE[i];
+    const lastDay = w.days[w.days.length - 1];
+    const matchDate = parseDate(lastDay.date);
+    if (today >= matchDate || i === 0) return w.week;
+  }
+  return 1;
+}
+
+function parseDate(str) {
+  const months = { 'Januari':0,'Februari':1,'Maret':2,'April':3,'Mei':4,'Juni':5,'Juli':6,'Agustus':7,'September':8,'Oktober':9,'November':10,'Desember':11 };
+  const parts = str.split(', ')[1].split(' ');
+  return new Date(parseInt(parts[2]), months[parts[1]], parseInt(parts[0]));
+}
+
+function isMatchDay(dateStr) {
+  const today = new Date();
+  const d = parseDate(dateStr);
+  return d.toDateString() === today.toDateString();
+}
+
+function isMatchPast(dateStr) {
+  const today = new Date();
+  const d = parseDate(dateStr);
+  d.setHours(23,59,59);
+  return today > d;
+}
+
+function buildTabs() {
+  const tabs = document.getElementById('weekTabs');
+  SCHEDULE.forEach(w => {
+    const div = document.createElement('div');
+    div.className = 'week-tab' + (w.week === activeWeek ? ' active' : '');
+    div.id = `tab-${w.week}`;
+    div.innerHTML = `WEEK ${w.week}<span class="week-dates">${w.dates}</span>`;
+    div.onclick = () => switchWeek(w.week);
+    tabs.appendChild(div);
+  });
+}
+
+function buildPanels() {
+  const container = document.getElementById('weekPanels');
+  SCHEDULE.forEach(w => {
+    const panel = document.createElement('div');
+    panel.className = 'week-panel' + (w.week === activeWeek ? ' active' : '');
+    panel.id = `panel-${w.week}`;
+
+    // Week summary
+    const totalMatches = w.days.reduce((a, d) => a + d.matches.length, 0);
+    panel.innerHTML = `
+      <div class="week-summary">
+        <div class="week-title-big">WEEK <span>#${w.week}</span></div>
+        <div class="week-meta">
+          ${w.days[0].date.split(', ')[1]}<br>
+          sampai<br>
+          ${w.days[w.days.length-1].date.split(', ')[1]}<br>
+          <strong>${totalMatches} MATCHES</strong>
+        </div>
+      </div>
+    `;
+
+    w.days.forEach(day => {
+      const sec = document.createElement('div');
+      sec.className = 'day-section';
+      const isToday = isMatchDay(day.date);
+      const isPast = isMatchPast(day.date);
+      sec.innerHTML = `
+        <div class="day-header">
+          <span class="day-label">${day.label}</span>
+          <span class="day-date">
+            ${day.date.split(', ')[1]} <span>${day.date.split(', ')[0].toUpperCase()}</span>
+            ${isToday ? '<span class="today-dot"></span>' : ''}
+          </span>
+        </div>
+        <div class="matches-grid" id="grid-w${w.week}-${day.label.replace(' ','')}"></div>
+      `;
+      panel.appendChild(sec);
+
+      const grid = sec.querySelector('.matches-grid');
+      day.matches.forEach(m => {
+        const t1 = TEAMS[m.t1], t2 = TEAMS[m.t2];
+        const card = document.createElement('div');
+        card.className = `match-card`;
+        card.dataset.t1 = m.t1;
+        card.dataset.t2 = m.t2;
+        if (isPast) card.style.opacity = '0.6';
+        card.innerHTML = `
+          <div class="match-num">
+            <span>MATCH ${m.num}</span>
+            <span class="match-time">${m.time} WIB</span>
+          </div>
+          <div class="match-body">
+            <div class="team-side">
+              <div class="team-logo team-${m.t1}">${t1.abbr}</div>
+              <div class="team-name-card">${m.t1 === 'AE' ? 'ALTER EGO' : m.t1 === 'TLID' ? 'LQD ID' : m.t1 === 'DEWA' ? 'DEWA' : m.t1}</div>
+            </div>
+            <div class="vs-divider">VS</div>
+            <div class="team-side right">
+              <div class="team-logo team-${m.t2}">${t2.abbr}</div>
+              <div class="team-name-card">${m.t2 === 'AE' ? 'ALTER EGO' : m.t2 === 'TLID' ? 'LQD ID' : m.t2 === 'DEWA' ? 'DEWA' : m.t2}</div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    });
+
+    container.appendChild(panel);
+  });
+}
+
+function switchWeek(week) {
+  document.querySelector('.week-tab.active')?.classList.remove('active');
+  document.querySelector('.week-panel.active')?.classList.remove('active');
+  document.getElementById(`tab-${week}`)?.classList.add('active');
+  document.getElementById(`panel-${week}`)?.classList.add('active');
+  activeWeek = week;
+  applyTeamFilter();
+
+  // Scroll tab into view
+  const tab = document.getElementById(`tab-${week}`);
+  tab?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function filterTeam(team, el) {
+  if (activeTeam === team) {
+    clearFilter();
+    return;
+  }
+  activeTeam = team;
+  document.querySelectorAll('.team-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.team === team);
+    c.classList.toggle('dimmed', c.dataset.team !== team);
+  });
+  applyTeamFilter();
+  updateFilterStatus();
+}
+
+function clearFilter() {
+  activeTeam = null;
+  document.querySelectorAll('.team-chip').forEach(c => {
+    c.classList.remove('active', 'dimmed');
+  });
+  applyTeamFilter();
+  updateFilterStatus();
+}
+
+function applyTeamFilter() {
+  document.querySelectorAll('.match-card').forEach(card => {
+    if (!activeTeam) {
+      card.classList.remove('dimmed', 'highlighted');
+    } else {
+      const involves = card.dataset.t1 === activeTeam || card.dataset.t2 === activeTeam;
+      card.classList.toggle('highlighted', involves);
+      card.classList.toggle('dimmed', !involves);
+    }
+  });
+}
+
+function updateFilterStatus() {
+  const el = document.getElementById('filterStatus');
+  const txt = document.getElementById('filterText');
+  if (activeTeam) {
+    const teamData = TEAMS[activeTeam];
+    let count = 0;
+    SCHEDULE[activeWeek-1].days.forEach(d => {
+      d.matches.forEach(m => { if(m.t1===activeTeam||m.t2===activeTeam) count++; });
+    });
+    txt.textContent = `FILTER: ${teamData.full} · ${count} MATCH DI WEEK ${activeWeek}`;
+    el.classList.add('visible');
+  } else {
+    el.classList.remove('visible');
+  }
+}
+
+function updateStats() {
+  let total = 0;
+  SCHEDULE.forEach(w => w.days.forEach(d => total += d.matches.length));
+  document.getElementById('statMatches').textContent = total;
+}
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// Init
+activeWeek = detectCurrentWeek();
+buildTabs();
+buildPanels();
+updateStats();
+</script>
+</body>
+</html>
