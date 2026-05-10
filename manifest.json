@@ -1,0 +1,17 @@
+{
+  "name": "MPL ID Season 17",
+  "short_name": "MPL ID S17",
+  "description": "Jadwal Regular Season MPL Indonesia Season 17",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1A1A1A",
+  "theme_color": "#E8001D",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
