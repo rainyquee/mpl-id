@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPL ID Season 17 — Jadwal Regular Season</title>
+
+<link rel="shortcut icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8001D;
+  --red-dark: #B8001A;
+  --red-light: #FF1F3D;
+  --white: #FFFFFF;
+  --off-white: #F8F8F8;
+  --light-gray: #F0F0F0;
+  --mid-gray: #DDDDDD;
+  --dark: #1A1A1A;
+  --text: #222222;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--off-white);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HEADER */
+header {
+  background: var(--red);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.header-logo {
+  width: 64px;
+  height: 64px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--red);
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+.header-text h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 2.6rem;
+  color: white;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-text p {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+}
+
+.header-badge {
+  margin-left: auto;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-align: right;
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.header-badge .season {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.header-badge .year {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: -60px;
+  width: 320px; height: 100%;
+  background: rgba(255,255,255,0.05);
+  transform: skewX(-15deg);
+}
+
+/* INFO BAR */
+.info-bar {
+  background: var(--dark);
+  color: white;
+  padding: 10px 24px;
+}
+
+.info-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+}
+
+.info-item { display: flex; gap: 6px; align-items: center; }
+.info-item span:first-child { color: var(--red-light); font-weight: 600; }
+
+/* NAV TABS */
+.nav-section {
+  background: white;
+  border-bottom: 3px solid var(--red);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.tab-group-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999;
+  padding-top: 10px;
+  margin-bottom: 2px;
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #888;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  margin-bottom: -3px;
+}
+
+.tab-btn:hover { color: var(--red); }
+.tab-btn.active { color: var(--red); border-bottom-color: var(--red); }
+
+.nav-divider { width: 1px; background: var(--mid-gray); margin: 6px 8px; }
+
+/* MAIN CONTENT */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.view { display: none; }
+.view.active { display: block; }
+
+/* WEEK VIEW */
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.week-badge {
+  background: var(--red);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  padding: 4px 20px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.week-dates {
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.week-dates strong { color: var(--dark); }
+
+/* DAY SECTION */
+.day-section { margin-bottom: 28px; }
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.day-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 4px;
+  color: white;
+}
+
+.day-label.hari1 { background: var(--red); }
+.day-label.hari2 { background: #222; }
+.day-label.hari3 { background: #444; }
+
+.day-date {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.matches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+/* MATCH CARD */
+.match-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px 20px;
+  border: 1px solid var(--mid-gray);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.match-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--red);
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232,0,29,0.12);
+}
+
+.match-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #aaa;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+.team-side {
+  flex: 1;
+  text-align: center;
+}
+
+.team-logo-placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin: 0 auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.team-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.vs-block {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.vs-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--red);
+  display: block;
+}
+
+.match-time {
+  font-size: 0.72rem;
+  color: #888;
+  font-weight: 500;
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+/* TEAM VIEW */
+.team-selector-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.team-sel-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 12px;
+  border-radius: 8px;
+  border: 2px solid var(--mid-gray);
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.team-sel-btn:hover { border-color: var(--red); color: var(--red); }
+.team-sel-btn.active { background: var(--red); border-color: var(--red); color: white; }
+.team-sel-btn.active .mini-logo { color: white; }
+
+.mini-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: white;
+}
+
+.team-schedule-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.team-schedule-title span { color: var(--red); }
+
+.team-matches-list { display: flex; flex-direction: column; gap: 10px; }
+
+.team-match-row {
+  background: white;
+  border-radius: 10px;
+  border: 1px solid var(--mid-gray);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-match-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+
+.team-match-row.home::before { background: var(--red); }
+.team-match-row.away::before { background: #555; }
+
+.team-match-row:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+
+.tmr-week {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: var(--light-gray);
+  color: #666;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tmr-date {
+  font-size: 0.82rem;
+  color: #888;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+.tmr-matchup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+}
+
+.tmr-team { flex: 1; }
+.tmr-team.highlighted { color: var(--red); }
+.tmr-vs { color: #ccc; font-size: 0.85rem; flex-shrink: 0; }
+
+.tmr-time {
+  font-size: 0.8rem;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+/* TEAM COLORS */
+.color-onic    { background: #F5A623; }
+.color-btr     { background: #C8102E; }
+.color-dewa    { background: #1A5276; }
+.color-evos    { background: #005B96; }
+.color-geek    { background: #C0392B; }
+.color-navi    { background: #F0B429; }
+.color-rrq     { background: #D4AC0D; }
+.color-tlid    { background: #00529B; }
+.color-ae      { background: #6C3483; }
+
+/* SECTION DIVIDER */
+.section-sep {
+  height: 1px;
+  background: var(--mid-gray);
+  margin: 24px 0;
+}
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+  margin-top: 48px;
+}
+
+footer strong { color: var(--red); }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #aaa;
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state p { font-family: 'Oswald', sans-serif; font-size: 1.1rem; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .header-text h1 { font-size: 1.8rem; }
+  .header-badge { display: none; }
+  .matches-grid { grid-template-columns: 1fr; }
+  .tmr-date { display: none; }
+  .info-bar-inner { gap: 16px; }
+}
+
+/* ANIMATE */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.view.active { animation: fadeUp 0.3s ease; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-logo">MPL</div>
+    <div class="header-text">
+      <h1>MPL Indonesia</h1>
+      <p>Regular Season — Jadwal Lengkap Week 1–9</p>
+    </div>
+    <div class="header-badge">
+      <div class="season">Season 17</div>
+      <div class="year">2026</div>
+    </div>
+  </div>
+</header>
+
+<div class="info-bar">
+  <div class="info-bar-inner">
+    <div class="info-item"><span>📅 Reguler Season:</span><span>27 Mar – 24 Mei 2026</span></div>
+    <div class="info-item"><span>🏟️ Venue:</span><span>XO Hall, Tanjung Duren, Jakarta Barat</span></div>
+    <div class="info-item"><span>🏆 Format:</span><span>Double Round Robin · BO3</span></div>
+    <div class="info-item"><span>🎫 Tiket:</span><span>id-mpl.com/ticket</span></div>
+  </div>
+</div>
+
+<div class="nav-section">
+  <div class="nav-inner">
+    <div class="tab-group-label">Per Minggu</div>
+    <div class="tabs" id="weekTabs">
+      <button class="tab-btn active" onclick="showWeek(1, this)">Week 1</button>
+      <button class="tab-btn" onclick="showWeek(2, this)">Week 2</button>
+      <button class="tab-btn" onclick="showWeek(3, this)">Week 3</button>
+      <button class="tab-btn" onclick="showWeek(4, this)">Week 4</button>
+      <button class="tab-btn" onclick="showWeek(5, this)">Week 5</button>
+      <button class="tab-btn" onclick="showWeek(6, this)">Week 6</button>
+      <button class="tab-btn" onclick="showWeek(7, this)">Week 7</button>
+      <button class="tab-btn" onclick="showWeek(8, this)">Week 8</button>
+      <button class="tab-btn" onclick="showWeek(9, this)">Week 9</button>
+      <div class="nav-divider"></div>
+      <button class="tab-btn" onclick="showTeamView(this)" id="teamTabBtn">Per Tim</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- WEEK VIEWS -->
+  <div id="weekView" class="view active">
+    <div id="weekContent"></div>
+  </div>
+
+  <!-- TEAM VIEW -->
+  <div id="teamView" class="view">
+    <div class="team-selector-grid" id="teamSelector"></div>
+    <div id="teamScheduleContent"></div>
+  </div>
+</main>
+
+<footer>
+  <strong>MPL Indonesia Season 17</strong> · Data berdasarkan jadwal resmi · Semua waktu dalam <strong>WIB</strong>
+</footer>
+
+<script>
+const TEAMS = {
+  ONIC:  { name: 'ONIC',  full: 'ONIC Esports',          colorClass: 'color-onic'  },
+  BTR:   { name: 'BTR',   full: 'Bigetron by Vitality',   colorClass: 'color-btr'   },
+  DEWA:  { name: 'DEWA',  full: 'Dewa United Esports',    colorClass: 'color-dewa'  },
+  EVOS:  { name: 'EVOS',  full: 'EVOS Esports',           colorClass: 'color-evos'  },
+  GEEK:  { name: 'GEEK',  full: 'Geek Fam',               colorClass: 'color-geek'  },
+  NAVI:  { name: 'NAVI',  full: 'Natus Vincere',          colorClass: 'color-navi'  },
+  RRQ:   { name: 'RRQ',   full: 'RRQ Hoshi',              colorClass: 'color-rrq'   },
+  TLID:  { name: 'TLID',  full: 'Team Liquid ID',         colorClass: 'color-tlid'  },
+  AE:    { name: 'AE',    full: 'Alter Ego',              colorClass: 'color-ae'    },
+};
+
+const SCHEDULE = [
+  {
+    week: 1,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 27 Maret 2026', matches: [
+        { num: 1, time: '15:00', team1: 'BTR',  team2: 'AE'  },
+        { num: 2, time: '18:00', team1: 'NAVI', team2: 'RRQ' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 28 Maret 2026', matches: [
+        { num: 1, time: '14:00', team1: 'EVOS', team2: 'GEEK' },
+        { num: 2, time: '17:00', team1: 'AE',   team2: 'ONIC' },
+        { num: 3, time: '20:00', team1: 'TLID', team2: 'NAVI' },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 29 Maret 2026', matches: [
+        { num: 1, time: '14:00', team1: 'DEWA', team2: 'BTR'  },
+        { num: 2, time: '17:00', team1: 'EVOS', team2: 'TLID' },
+        { num: 3, time: '20:00', team1: 'RRQ',  team2: 'ONIC' },
+      ]},
+    ]
+  },
+  {
+    week: 2,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 3 April 2026', matches: [
+        { num: 1, time: '15:00', team1: 'ONIC', team2: 'GEEK' },
+        { num: 2, time: '18:00', team1: 'DEWA', team2: 'NAVI' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 4 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'GEEK', team2: 'BTR'  },
+        { num: 2, time: '17:00', team1: 'AE',   team2: 'EVOS' },
+        { num: 3, time: '20:00', team1: 'TLID', team2: 'DEWA' },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 5 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'NAVI', team2: 'AE'   },
+        { num: 2, time: '17:00', team1: 'RRQ',  team2: 'TLID' },
+        { num: 3, time: '20:00', team1: 'BTR',  team2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 3,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 10 April 2026', matches: [
+        { num: 1, time: '15:00', team1: 'ONIC', team2: 'DEWA' },
+        { num: 2, time: '18:00', team1: 'NAVI', team2: 'EVOS' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 11 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'TLID', team2: 'GEEK' },
+        { num: 2, time: '17:00', team1: 'ONIC', team2: 'BTR'  },
+        { num: 3, time: '20:00', team1: 'RRQ',  team2: 'AE'   },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 12 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'BTR',  team2: 'NAVI' },
+        { num: 2, time: '17:00', team1: 'GEEK', team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'AE',   team2: 'DEWA' },
+      ]},
+    ]
+  },
+  {
+    week: 4,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 17 April 2026', matches: [
+        { num: 1, time: '15:00', team1: 'NAVI', team2: 'ONIC' },
+        { num: 2, time: '18:00', team1: 'EVOS', team2: 'DEWA' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 18 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'TLID', team2: 'BTR'  },
+        { num: 2, time: '17:00', team1: 'RRQ',  team2: 'EVOS' },
+        { num: 3, time: '20:00', team1: 'GEEK', team2: 'AE'   },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 19 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'ONIC', team2: 'TLID' },
+        { num: 2, time: '17:00', team1: 'BTR',  team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'DEWA', team2: 'GEEK' },
+      ]},
+    ]
+  },
+  {
+    week: 5,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 24 April 2026', matches: [
+        { num: 1, time: '15:00', team1: 'GEEK', team2: 'NAVI' },
+        { num: 2, time: '18:00', team1: 'EVOS', team2: 'ONIC' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 25 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'DEWA', team2: 'RRQ'  },
+        { num: 2, time: '17:00', team1: 'AE',   team2: 'TLID' },
+        { num: 3, time: '20:00', team1: 'EVOS', team2: 'BTR'  },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 26 April 2026', matches: [
+        { num: 1, time: '14:00', team1: 'AE',   team2: 'NAVI' },
+        { num: 2, time: '17:00', team1: 'GEEK', team2: 'ONIC' },
+        { num: 3, time: '20:00', team1: 'DEWA', team2: 'TLID' },
+      ]},
+    ]
+  },
+  {
+    week: 6,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 1 Mei 2026', matches: [
+        { num: 1, time: '15:00', team1: 'NAVI', team2: 'DEWA' },
+        { num: 2, time: '18:00', team1: 'AE',   team2: 'GEEK' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 2 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'EVOS', team2: 'AE'   },
+        { num: 2, time: '17:00', team1: 'TLID', team2: 'ONIC' },
+        { num: 3, time: '20:00', team1: 'RRQ',  team2: 'BTR'  },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 3 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'NAVI', team2: 'TLID' },
+        { num: 2, time: '17:00', team1: 'ONIC', team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'GEEK', team2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 7,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 8 Mei 2026', matches: [
+        { num: 1, time: '15:00', team1: 'GEEK', team2: 'DEWA' },
+        { num: 2, time: '18:00', team1: 'BTR',  team2: 'TLID' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 9 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'DEWA', team2: 'AE'   },
+        { num: 2, time: '17:00', team1: 'EVOS', team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'ONIC', team2: 'NAVI' },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 10 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'RRQ',  team2: 'GEEK' },
+        { num: 2, time: '17:00', team1: 'NAVI', team2: 'BTR'  },
+        { num: 3, time: '20:00', team1: 'TLID', team2: 'EVOS' },
+      ]},
+    ]
+  },
+  {
+    week: 8,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 15 Mei 2026', matches: [
+        { num: 1, time: '15:00', team1: 'BTR',  team2: 'GEEK' },
+        { num: 2, time: '18:00', team1: 'DEWA', team2: 'ONIC' },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 16 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'EVOS', team2: 'NAVI' },
+        { num: 2, time: '17:00', team1: 'TLID', team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'ONIC', team2: 'AE'   },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 17 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'DEWA', team2: 'EVOS' },
+        { num: 2, time: '17:00', team1: 'AE',   team2: 'BTR'  },
+        { num: 3, time: '20:00', team1: 'RRQ',  team2: 'NAVI' },
+      ]},
+    ]
+  },
+  {
+    week: 9,
+    days: [
+      { label: 'HARI-1', date: 'Jumat, 22 Mei 2026', matches: [
+        { num: 1, time: '15:00', team1: 'BTR',  team2: 'DEWA' },
+        { num: 2, time: '18:00', team1: 'TLID', team2: 'AE'   },
+      ]},
+      { label: 'HARI-2', date: 'Sabtu, 23 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'GEEK', team2: 'TLID' },
+        { num: 2, time: '17:00', team1: 'AE',   team2: 'RRQ'  },
+        { num: 3, time: '20:00', team1: 'BTR',  team2: 'ONIC' },
+      ]},
+      { label: 'HARI-3', date: 'Minggu, 24 Mei 2026', matches: [
+        { num: 1, time: '14:00', team1: 'RRQ',  team2: 'DEWA' },
+        { num: 2, time: '17:00', team1: 'ONIC', team2: 'EVOS' },
+        { num: 3, time: '20:00', team1: 'NAVI', team2: 'GEEK' },
+      ]},
+    ]
+  },
+];
+
+let currentWeek = 1;
+let currentTeam = null;
+
+function teamLogo(code, size = 44) {
+  const t = TEAMS[code];
+  return `<div class="team-logo-placeholder ${t.colorClass}" style="width:${size}px;height:${size}px">${code}</div>`;
+}
+
+function renderMatchCard(m) {
+  return `
+    <div class="match-card">
+      <span class="match-number">Match ${m.num}</span>
+      <div class="team-side">
+        ${teamLogo(m.team1)}
+        <div class="team-name">${m.team1}</div>
+      </div>
+      <div class="vs-block">
+        <span class="vs-text">VS</span>
+        <span class="match-time">${m.time} WIB</span>
+      </div>
+      <div class="team-side">
+        ${teamLogo(m.team2)}
+        <div class="team-name">${m.team2}</div>
+      </div>
+    </div>`;
+}
+
+function renderWeek(weekNum) {
+  const w = SCHEDULE.find(x => x.week === weekNum);
+  if (!w) return '';
+  const firstDay = w.days[0].date;
+  const lastDay  = w.days[w.days.length - 1].date;
+  let html = `
+    <div class="week-header">
+      <div class="week-badge">Minggu #${weekNum}</div>
+      <div class="week-dates">
+        <strong>${firstDay}</strong> – <strong>${lastDay}</strong>
+      </div>
+    </div>`;
+  w.days.forEach((day, i) => {
+    const cls = ['hari1','hari2','hari3'][i] || 'hari1';
+    html += `
+      <div class="day-section">
+        <div class="day-header">
+          <span class="day-label ${cls}">${day.label}</span>
+          <span class="day-date">${day.date}</span>
+        </div>
+        <div class="matches-grid">
+          ${day.matches.map(renderMatchCard).join('')}
+        </div>
+      </div>`;
+    if (i < w.days.length - 1) html += `<div class="section-sep"></div>`;
+  });
+  return html;
+}
+
+function showWeek(num, btn) {
+  currentWeek = num;
+  // deactivate all tabs
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('weekView').classList.add('active');
+  document.getElementById('teamView').classList.remove('active');
+  document.getElementById('weekContent').innerHTML = renderWeek(num);
+}
+
+function showTeamView(btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('weekView').classList.remove('active');
+  document.getElementById('teamView').classList.add('active');
+  renderTeamSelector();
+  if (currentTeam) renderTeamSchedule(currentTeam);
+}
+
+function renderTeamSelector() {
+  const el = document.getElementById('teamSelector');
+  el.innerHTML = Object.keys(TEAMS).map(code => {
+    const t = TEAMS[code];
+    const active = currentTeam === code ? 'active' : '';
+    return `<button class="team-sel-btn ${active}" onclick="selectTeam('${code}', this)">
+      <div class="mini-logo ${t.colorClass}">${code}</div>
+      ${t.full}
+    </button>`;
+  }).join('');
+}
+
+function selectTeam(code, btn) {
+  currentTeam = code;
+  document.querySelectorAll('.team-sel-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTeamSchedule(code);
+}
+
+function renderTeamSchedule(code) {
+  const t = TEAMS[code];
+  const matches = [];
+  SCHEDULE.forEach(w => {
+    w.days.forEach(day => {
+      day.matches.forEach(m => {
+        if (m.team1 === code || m.team2 === code) {
+          matches.push({ week: w.week, date: day.date, ...m });
+        }
+      });
+    });
+  });
+
+  const container = document.getElementById('teamScheduleContent');
+  if (matches.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="icon">🏆</div><p>Tidak ada jadwal ditemukan</p></div>`;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="team-schedule-title">${teamLogo(code, 36)} Jadwal <span>${t.full}</span></div>
+    <p style="color:#888;font-size:0.85rem;margin:8px 0 20px;">${matches.length} pertandingan di Regular Season</p>
+    <div class="team-matches-list">
+      ${matches.map(m => {
+        const isHome = m.team1 === code;
+        const opp = isHome ? m.team2 : m.team1;
+        return `<div class="team-match-row ${isHome ? 'home' : 'away'}">
+          <span class="tmr-week">W${m.week}</span>
+          <span class="tmr-date">${m.date.replace(/, \d{4}/, '')}</span>
+          <div class="tmr-matchup">
+            <span class="tmr-team highlighted">${code}</span>
+            <span class="tmr-vs">VS</span>
+            <span class="tmr-team">${opp}</span>
+          </div>
+          <span class="tmr-time">${m.time} WIB</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// INIT
+document.getElementById('weekContent').innerHTML = renderWeek(1);
+renderTeamSelector();
+</script>
+</body>
+</html>
